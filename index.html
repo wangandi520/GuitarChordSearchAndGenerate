@@ -80,16 +80,9 @@
 
         html2canvas(document.querySelector("#tab")).then(canvas => {
           $('#tab-download').html(canvas);
-          //console.log(canvas.toDataURL("image/png"));
           var pageData = canvas.toDataURL('image/png', 1.0);
-          console.log(pageData)
-          //window.location=(pageData.replace("image/jpeg", "image/octet-stream"));
           var filename = $('#user_notation').val();
-          saveFile(pageData.replace("image/png", "image/octet-stream"), filename + ".png")
-
-          //
-
-          //
+          saveFile(pageData.replace("image/png", "image/octet-stream"), filename + ".png");
         });
       })
 

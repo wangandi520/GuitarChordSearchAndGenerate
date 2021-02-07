@@ -8,58 +8,19 @@ body {
 p, div, span, li {
   font-size: 13px;
 }
-
-#header {
-  clear: both;
-  padding:0 10px;
-  margin-bottom:10px;
-  color: #FEFAFA;
-}
-#header h1 {
-  color: #FFFF33;
-}
-
-#menu {
-  float: left;
-  position:relative;
-  background-color: transparent;
-  color: #FEFAFA;
-}
-
-#menu ul {
-  margin-left:10px;
-  padding-left:10px;
-}
-
-#menu a,
-#menu a:visited,
-#menu a:hover {
-  color: #FEFAFA;
-}
   
 #content {
   margin-left: auto;
   margin-right: auto;
-  padding:1px 10px 10px;
   background-color: #F4EFFE;
 }
 
 #tab, #tab-download{
   margin: 0 auto;
-  width: fit-content;
+  width:-moz-fit-content;
+  width:-webkit-fit-content;
 }
 
 #tab-download{
   display: none;
 }
-
-
-#footer {
-  clear: both;
-}
-
-pre {
-  background-color: #000;
-  color: #EEE;
-  padding: 10px;
-} 
