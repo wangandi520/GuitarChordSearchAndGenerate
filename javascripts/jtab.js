@@ -620,9 +620,10 @@ Raphael.fn.svg_params = function(x,y,l1,l2) {
 Raphael.fn.chord_fretboard = function ( position, chord_name ) {
   var fret_left = this.current_offset + this.margin_left;
   // conventional fret labels
-  var fret_labels = [ '', '', '', 'III', '', 'V', '', 'VII', '', 'IX', '', '', 'XII', '', '', 'XV', '', 'XVII', '', 'XIX', '', 'XXI', '' ];
+  // var fret_labels = [ '', '', '', 'III', '', 'V', '', 'VII', '', 'IX', '', '', 'XII', '', '', 'XV', '', 'XVII', '', 'XIX', '', 'XXI', '' ];
   // alternative friendly fret labels. Currently disabled, maybe bring these back as a configurable option?
   // var fret_labels = [ '', '1fr', '2fr', '3fr', '4fr', '5fr', '6fr', '7fr', '8fr', '9fr', '10fr', '11fr', '12fr', '13fr', '14fr', '15fr', '16fr', '17fr', '18fr', '19fr', '20fr', '21fr', '' ];
+  var fret_labels = [ '', '', '', '3', '', '5', '', '7', '', '9', '', '', '12', '', '', '15', '', '17', '', '19', '', '21', '' ];
 
   this.text( // chord name
     fret_left + 2.5 * this.string_spacing,
