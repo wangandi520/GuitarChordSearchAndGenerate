@@ -45,7 +45,7 @@
   <div id="content">
 
     <span>Enter a phrase here:<a href="#" id="jtab_example">(Examples:Am):</a></span>
-    <input id="user_notation" size="40"><input id="jtab_startButton" type="button" value="jTab Start"
+    <input id="user_notation" size="40"><input id="jtab_startButton" type="button" value="jTab Generate"
       onclick="jtab.render($('#tab'),$('#user_notation').val());">
     <br />
     <div id="tab"></div>
@@ -78,7 +78,7 @@
     <p>Size: <input id="chord_size" size="40" value="4"></p>
     <p>Layout: <input id="chord_layout" size="40" value="1"></p>
     <p>Strings: <input id="chord_String" size="40" value="EADGBe"></p>
-    <input id="chord_startButton" type="button" value="ChordJS Start">
+    <input id="chord_startButton" type="button" value="ChordJS Generate">
     <input id="chord_clearButton" type="button" value="ChordJS Clear">
     <br />
     <br />
@@ -116,7 +116,8 @@
 
     <div id="help">
       <p>This project Demo: <a href="https://andi.press/guitar/">https://andi.press/guitar/</a></p>
-      <p>Github: <a href="https://github.com/wangandi520/guitar-chord-search-and-generate">https://github.com/wangandi520/guitar-chord-search-and-generate</a>
+      <p>Github: <a
+          href="https://github.com/wangandi520/guitar-chord-search-and-generate">https://github.com/wangandi520/guitar-chord-search-and-generate</a>
       </p>
       <p>You can use this html like: <a href="?phrase=Am F C">index.html?phrase=Am F C</a></p>
       <p>Or lite version: <a href="./index-lite.html?phrase=Am F C">index-lite.html?phrase=Am F C</a></p>
@@ -124,6 +125,19 @@
       <p>This project combined two projects in one, Thanks: </p>
       <p><a href="https://github.com/tardate/jtab">jTab https://github.com/tardate/jtab</a></p>
       <p><a href="https://github.com/acspike/ChordJS">ChordJS https://github.com/acspike/ChordJS</a></p>
+
+
+      <p><input id="body-blackgroundcolor-button" type="button" value="Body color to white"></p>
+      <p><input id="content-blackgroundcolor-button" type="button" value="Content color to white"></p>
+      <script>
+        $('#body-blackgroundcolor-button').click(function () {
+          $('body').css('background', 'white');
+        })
+
+        $('#content-blackgroundcolor-button').click(function () {
+          $('#content').css('background-color', 'white');
+        })
+      </script>
     </div>
   </div>
 </body>
