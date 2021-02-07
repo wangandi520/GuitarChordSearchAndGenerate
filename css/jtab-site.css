@@ -4,6 +4,7 @@ body {
   color:#000;
   font-family: helvetica, arial, sans-serif;
 }
+
 p, div, span, li {
   font-size: 13px;
 }
@@ -24,23 +25,34 @@ p, div, span, li {
   background-color: transparent;
   color: #FEFAFA;
 }
+
 #menu ul {
   margin-left:10px;
   padding-left:10px;
 }
+
 #menu a,
 #menu a:visited,
 #menu a:hover {
   color: #FEFAFA;
 }
   
-
 #content {
   margin-left: auto;
   margin-right: auto;
   padding:1px 10px 10px;
   background-color: #F4EFFE;
 }
+
+#tab, #tab-download{
+  margin: 0 auto;
+  width: fit-content;
+}
+
+#tab-download{
+  display: none;
+}
+
 
 #footer {
   clear: both;

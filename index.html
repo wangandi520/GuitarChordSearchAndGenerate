@@ -16,6 +16,7 @@
   <script src="javascripts/raphael.js" type="text/javascript"></script>
   <script src="javascripts/jtab.js" type="text/javascript"></script>
   <script src="javascripts/chords.js"></script>
+  <script src="javascripts/html2canvas.js"></script>
   <!-- END: for jtab -->
 
   <script type='text/javascript'>
@@ -42,27 +43,56 @@
 
   <div id="content">
 
-    <p>Enter a phrase here:<a href="#" id="jtab_example">(Examples:Am):</a></p>
-    <p><input id="user_notation" size="40"></p>
-    <input id="jtab_startButton" type="button" value="jTab Generate" onclick="jtab.render($('#tab'),$('#user_notation').val());">
-    <span><a href="jtab-index.htm">How to use</a></span>
-    <br />
-    <br />
-    <div id="tab"></div>
+    <div id="jtab">
 
+      <p>Enter a phrase here:<a href="#" id="jtab_example">(Examples:Am):</a></p>
+      <p><input id="user_notation" size="40"></p>
+      <input id="jtab_startButton" type="button" value="jTab Generate"
+        onclick="jtab.render($('#tab'),$('#user_notation').val());">
+      <input id="jtab_downloadButton" type="button" value="Download">
+      <span><a href="jtab-index.htm">How to use</a></span>
+      <br />
+      <br />
+      <div id="tab"></div>
+      <div id="tab-download"></div>
+    </div>
+    <br />
     <script type='text/javascript'>
       $('#user_notation').keyup(function (e) {
         jtab.render($('#tab'), $(this).val());
       });
-    </script>
-
-
-    <script type='text/javascript'>
 
       $('#jtab_example').click(function () {
         $('#user_notation').val('Am');
         $('#jtab_startButton').click();
       })
+
+      $('#jtab_downloadButton').click(function () {
+        var saveFile = function (data, filename) {
+          var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+          save_link.href = data;
+          save_link.download = filename;
+
+          var event = document.createEvent('MouseEvents');
+          event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+          save_link.dispatchEvent(event);
+        };
+
+        html2canvas(document.querySelector("#tab")).then(canvas => {
+          $('#tab-download').html(canvas);
+          //console.log(canvas.toDataURL("image/png"));
+          var pageData = canvas.toDataURL('image/png', 1.0);
+          console.log(pageData)
+          //window.location=(pageData.replace("image/jpeg", "image/octet-stream"));
+          var filename = $('#user_notation').val();
+          saveFile(pageData.replace("image/png", "image/octet-stream"), filename + ".png")
+
+          //
+
+          //
+        });
+      })
+
       if ($.getUrlVar('phrase')) {
         var paraments = $.getUrlVar('phrase');
         paraments = decodeURIComponent(paraments);
@@ -71,22 +101,23 @@
       }
     </script>
 
-    <p>Or make your own chord<a href="#" id="chord_example">(Examples:Am,X02210,--231-):</a></p>
-    <p>Name: <input id="chord_name" size="40"></p>
-    <p>Position: <input id="chord_positions" size="40"></p>
-    <p>Finger: <input id="chord_fingers" size="40"></p>
-    <p>Size: <input id="chord_size" size="40" value="4"></p>
-    <p>Layout: <input id="chord_layout" size="40" value="1"></p>
-    <p>Strings: <input id="chord_String" size="40" value="EADGBe"></p>
-    <input id="chord_startButton" type="button" value="ChordJS Generate">
-    <input id="chord_clearButton" type="button" value="ChordJS Clear">
-    <span><a href="ChordJS-README.md">How to use</a></span>
-    <br />
-    <br />
-    <div id="chord_tab"></div>
-    <br />
-    <br />
-
+    <div id="chord">
+      <p>Or make your own chord<a href="#" id="chord_example">(Examples:Am,X02210,--231-):</a></p>
+      <p>Name: <input id="chord_name" size="40"></p>
+      <p>Position: <input id="chord_positions" size="40"></p>
+      <p>Finger: <input id="chord_fingers" size="40"></p>
+      <p>Size: <input id="chord_size" size="40" value="4"></p>
+      <p>Layout: <input id="chord_layout" size="40" value="1"></p>
+      <p>Strings: <input id="chord_String" size="40" value="EADGBe"></p>
+      <input id="chord_startButton" type="button" value="ChordJS Generate">
+      <input id="chord_clearButton" type="button" value="ChordJS Clear">
+      <span><a href="ChordJS-README.md">How to use</a></span>
+      <br />
+      <br />
+      <div id="chord_tab"></div>
+      <br />
+      <br />
+    </div>
     <script>
       $('#chord_example').click(function () {
         $('#chord_name').val('Am');

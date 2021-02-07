@@ -28,5 +28,3 @@ ChordJS-README.md
 
 
 To be done:
-
-jTab chords can not download.
