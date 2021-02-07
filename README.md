@@ -2,6 +2,14 @@ Try it:
 
 https://andi.press/guitar/
 
+index.html:
+
+Search and generate chord.
+
+index-lite.html:
+
+Only use for share, like: index-lite.html?phrase=C Fm D:2
+
 
 This project combined two projects in one:
 
