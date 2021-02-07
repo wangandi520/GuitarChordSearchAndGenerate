@@ -9,7 +9,6 @@ p, div, span, li {
 }
 
 #header {
-  width: 1030px;
   clear: both;
   padding:0 10px;
   margin-bottom:10px;
@@ -22,7 +21,6 @@ p, div, span, li {
 #menu {
   float: left;
   position:relative;
-  width: 180px;
   background-color: transparent;
   color: #FEFAFA;
 }
@@ -45,7 +43,6 @@ p, div, span, li {
 }
 
 #footer {
-  width: 1030px;
   clear: both;
 }
 
