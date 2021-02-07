@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+    <title>jTab - Unit Tests</title>
+
+    <script src="unit_test_assets/jsunittest.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="unit_test_assets/unittest.css" type="text/css" />
+
+    <!-- START: for jtab -->
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link type="text/css" rel="stylesheet" href="css/jtab-helper.css"/>
+    <script src="javascripts/jquery.js" type="text/javascript"></script>
+    <script src="javascripts/raphael.js" type="text/javascript"></script>
+    <script src="javascripts/jtab.js" type="text/javascript"></script>
+    <!-- END: for jtab -->
+  </head>
+  <body>
+
+
+<div id="content">
+
+  <div id="header">
+    <h1>jTab - Unit Tests</h1>
+    <p>
+      This file tests the core algirithms in <strong>jtab.js</strong>.
+    </p>
+  </div>
+
+  <!-- Log output (one per Runner, via {testLog: "testlog"} option)-->
+  <div id="testlog"></div>
+
+  <!-- Put sample/test html here -->
+  <div id="sample">
+  </div>
+</div>
+
+<script type="text/javascript">
+// <![CDATA[
+
+  new Test.Unit.Runner({
+    setup: function() {
+    },
+
+    teardown: function() {
+    },
+
+    testUnitTestFrameworkOperational: function() { with(this) {
+      assert(true);
+    }},
+
+
+    testRaphaelGetStringNumber: function() {  with(this) {
+      var token = "$1"; var expected = 1;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$2";  expected = 2;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$3";  expected = 3;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$4";  expected = 4;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$5";  expected = 5;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$6";  expected = 6;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$e";  expected = 1;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$B";  expected = 2;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$G";  expected = 3;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$D";  expected = 4;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$A";  expected = 5;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+      token = "$E";  expected = 6;
+      assertEqual( expected, Raphael.fn.get_string_number(token), "incorrect string number for: '" + token + "'" );
+    }},
+
+    testRecognizeChordAndTabNotation: function() {  with(this) {
+      var notation = "Bm $3 4 4h5p3h4 5 $2 3 5 7 7h8p7 5/7 | A $4 7 9 $3 7 6 $5 9 $4 7h9 7 $5 9\7 5/7 | ";
+      var tabtype = jtab.characterize( notation );
+      assertEqual( 1, tabtype, "not recognised as chord and tab notation: '" + notation + "'" );
+      notation = "A7 $e 2 3 $B.3.$e.2";
+      tabtype = jtab.characterize( notation );
+      assertEqual( 1, tabtype, "not recognised as chord and tab notation: '" + notation + "'" );
+      notation = "Bm $3 4 4h5p3h4 5 $2 3 5 7 7h8p7 5/7 ";
+      tabtype = jtab.characterize( notation );
+      assertEqual( 1, tabtype, "not recognised as chord and tab notation: '" + notation + "'" );
+    }},
+
+
+    testRecognizeChordOnlyNotation: function() {  with(this) {
+      var notation = "A B C D E F G / | Ab Bb Db Eb Gb | A# C# D# F# G# || Am A6 Am6 A69 A7 Am7 Amaj7 A7b5 A7#5 Am7b5 A7b9 A9 Am9 Amaj9 Aadd9 A13 Asus2 Asus4 Adim Adim7 Aaug";
+      var tabtype = jtab.characterize( notation );
+      assertEqual( 2, tabtype, "not recognised as chord-only notation: '" + notation + "'" );
+    }},
+
+
+    testRecognizeCustomChordOnlyNotation: function() {  with(this) {
+			// let's try a C chord
+      var notation = "%X/X.4/3.2/2.0/0.1/1.0/0[C]";
+      var tabtype = jtab.characterize( notation );
+      assertEqual( 2, tabtype, "not recognised as custom-chord-only notation: '" + notation + "'" );
+    }},
+
+    testRecognizeCustomChordNoNameNotation: function() {  with(this) {
+			// let's try a C chord, but don't include the name
+      var notation = "%X/X.4/3.2/2.0/0.1/1.0/0";
+      var tabtype = jtab.characterize( notation );
+      assertEqual( 2, tabtype, "not recognised as custom-chord-only notation: '" + notation + "'" );
+    }},
+
+
+
+    testRecognizeTabOnlyNotation: function() {  with(this) {
+      var notation = "$1 2 3 $2.3.$1.2";
+      var tabtype = jtab.characterize( notation );
+      assertEqual( 3, tabtype, "not recognised as tab-only notation: '" + notation + "'" );
+      notation = "$e 2 3 $B.3.$e.2";
+      tabtype = jtab.characterize( notation );
+      assertEqual( 3, tabtype, "not recognised as tab-only notation: '" + notation + "'" );
+      notation = "X02220  8.10.10.9.8.8";
+      tabtype = jtab.characterize( notation );
+      assertEqual( 3, tabtype, "not recognised as tab-only notation: '" + notation + "'" );
+    }},
+
+/*
+The western scale is commonly found in 'western pop' music.
+It consists of 12 notes that are 1 intervals apart to form an octave.
+
+  Eg. C, C#, D, Eb, E, F, F#, G, G#, A, Bb, C
+
+Other notable scales such as the Pentatonic scale which consists of only 5 notes and
+the Indian scale which has 24 notes.
+
+We need to normalize the notes available to our western scale into base notes because
+the following pairs are equivalent.
+
+  C# = Db
+  D# = Eb
+  F# = Gb
+  G# = Ab
+  A# = Bb
+
+It is just a matter of convention when we favoured C#, Eb, F#, G#, Bb over their
+equivalents in rendering our base notes.
+*/
+
+    testWesternScale: function() { with(this) {
+      var scale = jtab.WesternScale;
+      assertNotUndefined( scale, "jtab.WesternScale should be valid" );
+    }},
+
+    testWesternScaleBaseNotes: function() { with(this) {
+      var baseNotes = jtab.WesternScale.BaseNotes;
+      assertNotUndefined( baseNotes, "jtab.WesternScale.BaseNotes should be valid" );
+
+      var validBaseNotes = {
+      'C' : [ 'C' , 'C', 0 ],
+      'C#': [ 'C#', 'C', 1 ],
+      'Db': [ 'C#', 'C', 1 ],
+      'D' : [ 'D' , 'D', 0 ],
+      'D#': [ 'Eb', 'D', 1 ],
+      'Eb': [ 'Eb', 'D', 1 ],
+      'E' : [ 'E' , 'E', 0 ],
+      'F' : [ 'F' , 'E', 1 ],
+      'F#': [ 'F#', 'E', 2 ],
+      'Gb': [ 'F#', 'E', 2 ],
+      'G' : [ 'G' , 'G', 0 ],
+      'G#': [ 'G#', 'G', 1 ],
+      'Ab': [ 'G#', 'G', 1 ],
+      'A' : [ 'A' , 'A', 0 ],
+      'A#': [ 'Bb', 'A', 1 ],
+      'Bb': [ 'Bb', 'A', 1 ],
+      'B' : [ 'B' , 'A', 2 ]
+      };
+      assertHashEqual( validBaseNotes, baseNotes, "jtab.WesternScale.BaseNotes should have correct mappings" );
+
+    }},
+
+    testWesternScaleBaseIntervals: function() { with(this) {
+      var baseIntervals = jtab.WesternScale.BaseIntervals;
+      assertNotUndefined( baseIntervals, "jtab.WesternScale.BaseIntervals should be valid" );
+
+      var validBaseIntervals = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'G#', 'A', 'Bb', 'B'];
+      assertHashEqual( validBaseIntervals, baseIntervals, "jtab.WesternScale.BaseIntervals should have correct 12 notes" );
+    }},
+
+    testChordsAreBasedOnWesternScale: function() { with(this) {
+      var msg = "Chords should be based on the western scale";
+
+      var chord = new jtabChord('C');
+      assertEqual( jtab.WesternScale, chord.scale, msg );
+      assertEqual( jtab.WesternScale.BaseNotes, chord.baseNotes, msg );
+    }},
+
+    testChordListIsAvailable: function() { with(this) {
+      var msg = "jtab.ChordLists should be an array of all chord names";
+      var chordList = jtab.ChordList();
+      assertInstanceOf( Array, chordList, msg );
+
+    }},
+
+    testChordListContainsValidChords: function() { with(this) {
+      var msg = "jtab.ChordLists should only contain valid chord names";
+      var chordList = jtab.ChordList();
+      for (var key = 0; key < chordList.length; key++) {
+        var token = chordList[key];
+        assertEqual( "string", typeof(token), token + " expect a String" );
+        var chord = new jtabChord(token);
+        assert( chord.isValid, "jtabChord('" + token + "') should be valid" );
+      }
+    }},
+
+/*
+In our CAGED system, we'll be using positions as defined in the following matrix
+
+  C = position 1
+  A = position 2
+  G = position 3
+  E = position 4
+  D = position 5
+
+As such position 1 can also be called the 'C shape' position, position 2 the
+'A shape' position, etc.
+
+Playing different chord voicings then becomes nothing more than just shifting the
+appropriate shapes around to coincide the shape's root note with the desired chord's
+root note on the fretboard.
+
+Eg.
+
+  Fret 0        X_R_______O
+                |_|_|_|_|_|
+                |_|_1_2_3_|
+  Fret 3        |_|_|_|_|_|
+                |_|_|_|_|_|
+
+          An 'A shaped' A major where its root note is at 'R'
+
+  Fret 0        X__________
+                |_|_|_|_|_|
+                |_R_|_|_|_1
+  Fret 3        |_|_|_|_|_|
+                |_|_2_3_4_|
+
+          An 'A shaped' B major with root of A shape over B note on 5th string
+
+Position/shape can be defined in our chord token,
+
+Eg. C:1, Cmaj7:3, etc.
+
+where the numbers 1-5 after the ':' in token reflects the desired position/shape.
+
+If in the absence of specified position/shape in token, we'll use the most playable
+shape as the desired chord's position/shape. In general,
+
+- Chords with root note within C, A, G, E, D will take the shape of it's root note except
+  * major 7ths
+  * minor chords
+  * dominants above 7ths, eg. C9, C11, etc.
+  * augmented chords
+  * diminished chords
+- E & A shapes (good for barred chords) will be considered for exceptions above
+- Chords with root note that falls within B, Bb, C#, Eb will use  A shape
+- Chords with root note that falls within F, F#, G# will take E shape
+*/
+
+    testRecognizingRootNoteOfChordFromToken: function() { with(this) {
+      var msg = "Root note of chord should be correct";
+
+      var chord = new jtabChord('C');
+      assertEqual( 'C', chord.rootNote, msg );
+
+      chord = new jtabChord('C#');
+      assertEqual( 'C#', chord.rootNote, msg );
+
+      chord = new jtabChord('C#m');
+      assertEqual( 'C#', chord.rootNote, msg );
+
+      chord = new jtabChord('C#maj7');
+      assertEqual( 'C#', chord.rootNote, msg );
+
+      chord = new jtabChord('C#maj7:1');
+      assertEqual( 'C#', chord.rootNote, msg );
+
+      chord = new jtabChord('Db');
+      assertEqual( 'Db', chord.rootNote, msg );
+
+      chord = new jtabChord('Dbmaj7');
+      assertEqual( 'Db', chord.rootNote, msg );
+
+      chord = new jtabChord('Dbmaj7:2');
+      assertEqual( 'Db', chord.rootNote, msg );
+    }},
+
+    testSettingCagedPositionFromToken: function() { with(this) {
+      var msg = "Caged position should follow position found in token";
+
+      var chord = new jtabChord('C:1');
+      var cagedPos = chord.cagedPos;
+      assertNotUndefined( cagedPos );
+      assertEqual( 1, cagedPos, msg );
+
+      chord = new jtabChord('C:2');
+      cagedPos = chord.cagedPos;
+      assertEqual( 2, cagedPos, msg );
+
+      chord = new jtabChord('C:3');
+      cagedPos = chord.cagedPos;
+      assertEqual( 3, cagedPos, msg );
+
+      chord = new jtabChord('C:4');
+      cagedPos = chord.cagedPos;
+      assertEqual( 4, cagedPos, msg );
+    }},
+
+    testSettingCagedBaseFromToken: function() { with(this) {
+      var msg = "Caged base fret position should derived from root note";
+
+      var chord = new jtabChord('C');
+      var cagedBaseShape = chord.cagedBaseShape;
+      assertNotUndefined( cagedBaseShape );
+      assertEqual( 'C', cagedBaseShape, msg );
+
+      chord = new jtabChord('C#');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'C', cagedBaseShape, msg);
+
+      chord = new jtabChord('D');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'D', cagedBaseShape, msg);
+
+      chord = new jtabChord('D#');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'D', cagedBaseShape, msg);
+
+      chord = new jtabChord('E');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'E', cagedBaseShape, msg);
+
+      chord = new jtabChord('Eb');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'D', cagedBaseShape, msg);
+
+      chord = new jtabChord('F');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'E', cagedBaseShape, msg);
+
+      chord = new jtabChord('F#');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'E', cagedBaseShape, msg);
+
+      chord = new jtabChord('G');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'G', cagedBaseShape, msg);
+
+      chord = new jtabChord('G#');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'G', cagedBaseShape, msg);
+
+      chord = new jtabChord('A');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'A', cagedBaseShape, msg);
+
+      chord = new jtabChord('A#');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'A', cagedBaseShape, msg);
+
+      chord = new jtabChord('Bb');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'A', cagedBaseShape, msg);
+
+      chord = new jtabChord('B');
+      cagedBaseShape = chord.cagedBaseShape;
+      assertEqual( 'A', cagedBaseShape, msg);
+    }},
+
+    testChord_C_fingering: function() {  with(this) {
+      var token = 'C';
+      var modelChordArray = [ 0, [-1 ],  [3,3],  [2,2],  [0  ],  [1,1],  [0  ] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( ! c.isCaged, "jtabChord('" + token + "') should not be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testCustomChord_Bm7b5_fingering: function() {  with(this) {
+      var token = "%7/2.X/X.7/3.7/4.6/1.X/X[Bm7b5]";
+
+      var modelChordArray = [ 5, [7,2],  [-1 ],  [7,3],  [7,4],  [6,1],  [-1  ]]
+      var c = new jtabChord(token);
+
+			assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCustom, "jtabChord('" + token + "') should be custom chord" );
+			assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+
+    testCustomChord_F_fingering: function() {  with(this) {
+      var token = "%8/2.X/X.7/1.10/4.X/X.X/X[F]";
+
+      var modelChordArray = [ 6, [8,2],  [-1 ],  [7,1],  [10,4],  [-1 ],  [-1  ]]
+      var c = new jtabChord(token);
+
+			assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCustom, "jtabChord('" + token + "') should be custom chord" );
+			assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+		testCustomChord_No_Name: function() {  with(this) {
+		  var token = "%0/0.2/2.3/2.1/1.0/0.0/0";
+
+		  var modelChordArray = [ 0, [0,0],  [2,2],  [3,2],  [1,1],  [0,0],  [0,0]]
+		  var c = new jtabChord(token);
+			assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+		  assert( c.isCustom, "jtabChord('" + token + "') should be custom chord" );
+			assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+		}},
+
+
+		testCustomChord_E_fingering: function() {  with(this) {
+		  var token = "%0/0.2/2.3/2.1/1.0/0.0/0[E]";
+
+		  var modelChordArray = [ 0, [0,0],  [2,2],  [3,2],  [1,1],  [0,0],  [0,0]]
+		  var c = new jtabChord(token);
+
+			assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+		  assert( c.isCustom, "jtabChord('" + token + "') should be custom chord" );
+			assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+		}},
+
+    testChord_C1_fingering: function() { with(this) {
+      var token = 'C:1';
+      var modelChordArray = [ 0, [-1 ],  [3,3],  [2,2],  [0  ],  [1,1],  [0  ] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_C2_fingering: function() { with(this) {
+      var token = 'C:2';
+      var modelChordArray = [ 2, [-1,-1 ],  [3,1],  [5,2],  [5,3],  [5,4],  [3,1] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_Cm_fingering: function() {  with(this) {
+      var token = 'Cm';
+      var modelChordArray = [ 0, [-1 ],  [3,4],  [1,2],  [0  ],  [1,1],  [-1 ] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( ! c.isCaged, "jtabChord('" + token + "') should not be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_Cm1_fingering: function() { with(this) {
+      var token = 'Cm:1';
+      var modelChordArray = [ 0, [-1 ],  [3,4],  [1,2],  [0  ],  [1,1],  [-1 ] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_Cm2_fingering: function() { with(this) {
+      var token = 'Cm:2';
+      var modelChordArray = [ 2, [-1,-1 ],  [3,1],  [5,3],  [5,4],  [4,2],  [3,1] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_A_fingering: function() {  with(this) {
+      var token = 'A';
+      var modelChordArray = [ 0, [-1],  [0  ],  [2,2],  [2,1],  [2,3],  [0  ] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( ! c.isCaged, "jtabChord('" + token + "') should not be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_A1_fingering: function() { with(this) {
+      var token = 'A:1';
+      var modelChordArray = [ 0, [-1],  [0  ],  [2,2],  [2,1],  [2,3],  [0  ] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_A2_fingering: function() { with(this) {
+      var token = 'A:2';
+      var modelChordArray = [ 1, [5,3],  [4,2],  [2,1],  [2,1],  [2,1],  [5,4  ] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_A3_fingering: function() { with(this) {
+      var token = 'A:3';
+      var modelChordArray = [ 4, [5,1],  [7,3],  [7,4],  [6,2],  [5,1],  [5,1  ] ];
+
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_Dm7b5_fingering: function() {  with(this) {
+      var token = 'Dm7b5';
+      var modelChordArray = [ 0, [-1 ],  [-1 ],  [0  ],  [1,1],  [1,1],  [1,1] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( ! c.isCaged, "jtabChord('" + token + "') should not be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_Dm7b5p2_fingering: function() {  with(this) {
+      var token = 'Dm7b5:2';
+      var modelChordArray = [ 1, [-1, null], [5,1 ],  [6,3],  [5,2],  [6,4],  [-1, null] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( c.isCaged, "jtabChord('" + token + "') should be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_AddChord_insert: function() {  with(this) {
+      var token = 'ATest';
+      var modelChordArrayNew = [ 0, [-1],  [0  ],  [2,3],  [2,2],  [2,1],  [0  ] ];
+      var c = new jtabChord(token);
+      assert( !c.isValid, "jtabChord('" + token + "') should not initially be valid" );
+      jtab.AddChord(token, [modelChordArrayNew]);
+      c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid after insert" );
+      assertHashEqual( modelChordArrayNew, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }},
+
+    testChord_AddChord_update: function() {  with(this) {
+      var token = 'A';
+      var modelChordArray = [ 0, [-1],  [0  ],  [2,2],  [2,1],  [2,3],  [0  ] ];
+      var modelChordArrayNew = [ 0, [-1],  [0  ],  [2,2],  [2,2],  [2,3],  [0  ] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should initially be valid" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray before update" );
+      jtab.AddChord(token, [modelChordArrayNew]);
+      c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid after update" );
+      assertHashEqual( modelChordArrayNew, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray after update" );
+    }},
+
+    testChord_Csharpm_fingering: function() {  with(this) {
+      var token = 'C#m';
+      var modelChordArray = [ 0, [-1 ],  [-1],  [2,2],  [1,1],  [2,3],  [0] ];
+      var c = new jtabChord(token);
+      assert( c.isValid, "jtabChord('" + token + "') should be valid" );
+      assert( ! c.isCaged, "jtabChord('" + token + "') should not be CAGED" );
+      assertHashEqual( modelChordArray, c.chordArray, "jtabChord('" + token + "') returned incorrect chordArray" );
+    }}
+
+  });
+// ]]>
+</script>
+</body>
+</html>
