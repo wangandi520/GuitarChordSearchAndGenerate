@@ -21,6 +21,8 @@ jTab https://github.com/tardate/jtab
 
 ChordJS https://github.com/acspike/ChordJS
 
+html2canvas https://github.com/niklasvh/html2canvas
+
 
 More informations please see their pages or: 
 jtab-index.htm
