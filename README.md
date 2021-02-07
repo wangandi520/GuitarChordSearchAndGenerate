@@ -1,6 +1,10 @@
-Try it: 
+Demo: 
 
 https://andi.press/guitar/
+
+github:
+
+https://github.com/wangandi520/guitar-chord-search-and-generate
 
 index.html:
 
@@ -11,7 +15,7 @@ index-lite.html:
 Only use for share, like: index-lite.html?phrase=C Fm D:2
 
 
-This project combined two projects in one:
+This project combined two projects in one, Thanks:
 
 jTab https://github.com/tardate/jtab
 
