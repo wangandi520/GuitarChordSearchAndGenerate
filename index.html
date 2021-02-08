@@ -49,6 +49,7 @@
       <p><input id="user_notation" size="40"></p>
       <input id="jtab_scalebutton" type="button" value="Scale:">
       <input id="jtab_scalevalue" value="1">
+      <input id="jtab_X6" type="button" value="X6">
       <input id="jtab_startButton" type="button" value="jTab Generate"
         onclick="jtab.render($('#tab'),$('#user_notation').val());">
       <input id="jtab_downloadButton" type="button" value="Download">
@@ -75,6 +76,12 @@
         $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
       })
 
+      $('#jtab_X6').click(function () {
+        var chord = $('#user_notation').val();
+        var chord_X6 = chord + ' ' + chord + ':2 ' + chord + ':3 ' + chord + ':4 ' + chord + ':5 ' + chord + ':6';
+        $('#user_notation').val(chord_X6);
+        $('#jtab_startButton').click();
+      })
 
       $('#jtab_startButton').click(function () {
         jtab.render($('#tab'), $(this).val());
