@@ -47,6 +47,8 @@
 
       <p>Enter a phrase here:<a href="#" id="jtab_example">(Examples:Am):</a></p>
       <p><input id="user_notation" size="40"></p>
+      <input id="jtab_scalevalue" value="2">
+      <input id="jtab_scalebutton" type="button" value="Scale">
       <input id="jtab_startButton" type="button" value="jTab Generate"
         onclick="jtab.render($('#tab'),$('#user_notation').val());">
       <input id="jtab_downloadButton" type="button" value="Download">
@@ -60,11 +62,27 @@
     <script type='text/javascript'>
       $('#user_notation').keyup(function (e) {
         jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
       });
 
       $('#jtab_example').click(function () {
         $('#user_notation').val('Am');
         $('#jtab_startButton').click();
+      })
+
+      $('#jtab_scalevalue').blur(function () {
+        jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
+      })
+
+
+      $('#jtab_startButton').click(function () {
+        jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
+      })
+
+      $('#jtab_scalebutton').click(function () {
+        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
       })
 
       $('#jtab_downloadButton').click(function () {
@@ -80,6 +98,10 @@
 
         html2canvas(document.querySelector("#tab")).then(canvas => {
           $('#tab-download').html(canvas);
+          //
+          //
+          
+        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
           var pageData = canvas.toDataURL('image/png', 1.0);
           var filename = $('#user_notation').val();
           saveFile(pageData.replace("image/png", "image/octet-stream"), filename + ".png");
