@@ -26,8 +26,3 @@ body {
 #tab-download,#chord_download{
   display: none;
 }
-
-#jtab_downloadButton{
-  z-index:999;
-  position:fixed;
-}
