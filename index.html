@@ -85,7 +85,8 @@
 
       $('#jtab_scalevalue').blur(function () {
         jtab.render($('#tab'), $(this).val());
-        $('#tab').css('transform', 'scale(' + $('#jtab_scalevalue').val() + ')');
+		jtab_scale = $('#jtab_scalevalue').val();
+        $('#tab').css('transform', 'scale(' + jtab_scale + ')');
       })
 
       $('#jtab_CAGED').click(function () {
