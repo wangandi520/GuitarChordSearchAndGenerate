@@ -49,10 +49,11 @@
       <p><input id="user_notation" size="40"></p>
       <input id="jtab_scalebutton" type="button" value="Scale:">
       <input id="jtab_scalevalue" value="1">
-      <input id="jtab_X6" type="button" value="X6">
+      <input id="jtab_CAGED" type="button" value="CAGED">
+	  <br />
       <input id="jtab_startButton" type="button" value="jTab Generate"
         onclick="jtab.render($('#tab'),$('#user_notation').val());">
-      <input id="jtab_downloadButton" type="button" value="Download">
+      <input id="jtab_downloadButton" type="button" value="jTab Download">
       <span><a href="jtab-index.htm">How to use</a></span>
       <br />
       <br />
@@ -61,40 +62,7 @@
     </div>
     <br />
     <script type='text/javascript'>
-      $('#user_notation').keyup(function (e) {
-        jtab.render($('#tab'), $(this).val());
-        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
-      });
-
-      $('#jtab_example').click(function () {
-        $('#user_notation').val('Am');
-        $('#jtab_startButton').click();
-      })
-
-      $('#jtab_scalevalue').blur(function () {
-        jtab.render($('#tab'), $(this).val());
-        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
-      })
-
-      $('#jtab_X6').click(function () {
-        var chord = $('#user_notation').val();
-        var chord_X6 = chord + ' ' + chord + ':2 ' + chord + ':3 ' + chord + ':4 ' + chord + ':5 ' + chord + ':6';
-        $('#user_notation').val(chord_X6);
-        $('#jtab_startButton').click();
-      })
-
-      $('#jtab_startButton').click(function () {
-        jtab.render($('#tab'), $(this).val());
-        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
-      })
-
-      $('#jtab_scalebutton').click(function () {
-        jtab.render($('#tab'), $(this).val());
-        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
-      })
-
-      $('#jtab_downloadButton').click(function () {
-        var saveFile = function (data, filename) {
+	var saveFile = function (data, filename) {
           var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
           save_link.href = data;
           save_link.download = filename;
@@ -104,12 +72,46 @@
           save_link.dispatchEvent(event);
         };
 
+
+      $('#user_notation').keyup(function (e) {
+        jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform', 'scale(' + $('#jtab_scalevalue').val() + ')');
+      });
+
+      $('#jtab_example').click(function () {
+        $('#user_notation').val('Am');
+        $('#jtab_startButton').click();
+      })
+
+      $('#jtab_scalevalue').blur(function () {
+        jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform', 'scale(' + $('#jtab_scalevalue').val() + ')');
+      })
+
+      $('#jtab_CAGED').click(function () {
+        var chord = $('#user_notation').val();
+        var chord_CAGED = chord + ' ';
+        for (i = 2; i <= 5; i++) {
+          chord_CAGED = chord_CAGED + chord + ':' + i + ' ';
+        }
+        $('#user_notation').val(chord_CAGED);
+        $('#jtab_startButton').click();
+      })
+
+      $('#jtab_startButton').click(function () {
+        jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform', 'scale(' + $('#jtab_scalevalue').val() + ')');
+      })
+
+      $('#jtab_scalebutton').click(function () {
+        jtab.render($('#tab'), $(this).val());
+        $('#tab').css('transform', 'scale(' + $('#jtab_scalevalue').val() + ')');
+      })
+
+      $('#jtab_downloadButton').click(function () {
         html2canvas(document.querySelector("#tab")).then(canvas => {
           $('#tab-download').html(canvas);
-          //
-          //
-          
-        $('#tab').css('transform','scale(' + $('#jtab_scalevalue').val() + ')');
+          $('#tab').css('transform', 'scale(' + $('#jtab_scalevalue').val() + ')');
           var pageData = canvas.toDataURL('image/png', 1.0);
           var filename = $('#user_notation').val();
           saveFile(pageData.replace("image/png", "image/octet-stream"), filename + ".png");
@@ -134,10 +136,12 @@
       <p>Strings: <input id="chord_String" size="40" value="EADGBe"></p>
       <input id="chord_startButton" type="button" value="ChordJS Generate">
       <input id="chord_clearButton" type="button" value="ChordJS Clear">
+      <input id="chord_downloadButton" type="button" value="ChordJS Download">
       <span><a href="ChordJS-README.md">How to use</a></span>
       <br />
       <br />
       <div id="chord_tab"></div>
+      <div id="chord_download"></div>
       <br />
       <br />
     </div>
@@ -164,7 +168,15 @@
         $('#chord_tab').html('');
         ChordJS.replace();
       })
-
+	  
+      $('#chord_downloadButton').click(function () {
+        html2canvas(document.querySelector("#chord_tab")).then(canvas => {
+          $('#chord-download').html(canvas);
+          var pageData = canvas.toDataURL('image/png', 1.0);
+          var filename = $('#chord_name').val();
+          saveFile(pageData.replace("image/png", "image/octet-stream"), filename + ".png");
+        });
+      })
 
       ChordJS.replace();
     </script>

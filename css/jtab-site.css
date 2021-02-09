@@ -5,11 +5,8 @@ body {
   font-family: helvetica, arial, sans-serif;
 }
 
-p, div, span, li {
-  font-size: 13px;
-}
   
-#content {
+#content{
   margin-left: auto;
   margin-right: auto;
   background-color: #F4EFFE;
@@ -22,9 +19,14 @@ p, div, span, li {
   margin: 0 auto;
   width:-moz-fit-content;
   width:-webkit-fit-content;
-  transform: rotate(0) scale(2);
 }
 
-#tab-download{
+#chord_tab, #chord-download{
+  margin: 0 auto;
+  width:-moz-fit-content;
+  width:-webkit-fit-content;
+}
+
+#tab-download,#chord_download{
   display: none;
 }
