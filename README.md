@@ -1,19 +1,32 @@
-Demo: 
+## 吉他和弦图查询与生成
+## Guitar Chord Search And Generate
 
-https://andi.press/guitar/
+## 演示：[https://andi.wang/guitar/](https://andi.wang/guitar/)
+Github：[https://github.com/wangandi520/GuitarChordSearchAndGenerate](https://github.com/wangandi520/GuitarChordSearchAndGenerate)
 
-github:
+index.html:主页面，生成查询功能。
 
-https://github.com/wangandi520/guitar-chord-search-and-generate
+index-lite.html:方便分享，格式：index-lite.html?phrase=C Fm D:2
 
-index.html:
+本项目由以下项目组合而来，感谢:
 
-Search and generate chord.
+jTab https://github.com/tardate/jtab
 
-index-lite.html:
+ChordJS https://github.com/acspike/ChordJS
 
-Only use for share, like: index-lite.html?phrase=C Fm D:2
+html2canvas https://github.com/niklasvh/html2canvas
 
+
+更多用法请看: 
+jtab-index.htm
+ChordJS-README.md
+
+## Demo:[https://andi.wang/guitar/](https://andi.wang/guitar/)
+Github:[https://github.com/wangandi520/GuitarChordSearchAndGenerate](https://github.com/wangandi520/GuitarChordSearchAndGenerate)
+
+index.html:Search and generate chord.
+
+index-lite.html:Only use for share, like: index-lite.html?phrase=C Fm D:2
 
 This project combined two projects in one, Thanks:
 
@@ -23,10 +36,7 @@ ChordJS https://github.com/acspike/ChordJS
 
 html2canvas https://github.com/niklasvh/html2canvas
 
-
 More informations please see their pages or: 
 jtab-index.htm
 ChordJS-README.md
 
-
-To be done:
